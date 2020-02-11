@@ -1,0 +1,17 @@
+RULE show consumed exception
+CLASS demo.example.DatePrinter
+METHOD printDate(Date)
+AT EXCEPTION EXIT
+BIND demo.example:RuntimeException = $^
+IF TRUE
+DO demo.example.printStackTrace(System.err);
+ENDRULE
+
+
+RULE fix date assignment
+CLASS demo.example.DatePrinter
+METHOD printDate()
+AFTER WRITE $d2
+IF TRUE
+DO $d2 = new Date();
+ENDRULE

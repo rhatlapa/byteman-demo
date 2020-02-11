@@ -1,0 +1,33 @@
+RULE wrong method call
+CLASS demo.example.NetworkCalc
+METHOD readPartOfRemoteOrder
+AFTER INVOKE readLine
+BIND
+ r:String=$!;
+IF r.equals("mult")
+DO
+return "mul";
+ENDRULE
+
+
+RULE div by zero
+CLASS demo.example.NetworkCalc
+METHOD div
+AT EXCEPTION EXIT
+IF true
+DO
+System.out.println(String.valueOf($1)+" / "+String.valueOf($2)+" = N/A");
+return null;
+ENDRULE
+
+RULE fix sub
+CLASS demo.example.NetworkCalc
+METHOD sub
+AT WRITE $r
+IF true
+DO
+$r = $1 - $2
+ENDRULE
+
+
+

@@ -1,0 +1,82 @@
+RULE clean list
+CLASS demo.example.StringUniquer
+METHOD proceed
+AT ENTRY
+IF !flagged("only once")
+DO
+traceln("size "+$ls.size());
+$ls.clear();
+flag("only once")
+ENDRULE
+
+
+RULE fix toString
+CLASS demo.example.StringUniquer$Agent
+METHOD toString
+AT EXIT
+IF true
+DO
+return $0.name+": "+$0.information;
+ENDRULE
+
+RULE fix hash
+CLASS demo.example.StringUniquer$Agent
+METHOD hashCode
+AT EXIT
+IF true
+DO
+return $0.name.hashCode()
+ENDRULE
+
+RULE fix equals
+CLASS demo.example.StringUniquer$Agent
+METHOD equals
+AT EXIT
+BIND
+  a:demo.example.StringUniquer$Agent=$0;
+  b:demo.example.StringUniquer$Agent=$1;
+IF true
+DO
+return java.util.Objects.equals(a.name,b.name);
+ENDRULE
+
+
+#### the value is actually not being changed as those objects are considered equal, see Set#add javadoc for details
+#RULE equals info
+#CLASS demo.example.StringUniquer$Agent
+#METHOD equals
+#AT ENTRY
+#BIND other:demo.example.StringUniquer$Agent = $1
+#IF true
+#DO
+#traceln("this.info " + $0.information + " vs other.info " + other.information);
+#traceln("this.name " + $0.name + " vs other.name " + other.name);
+#ENDRULE
+
+#RULE equals info2
+#CLASS demo.example.StringUniquer$Agent
+#METHOD equals
+#AFTER WRITE $agent
+#IF true
+#DO
+#traceln("Agent.info "+$agent.information);
+#traceln("Agent.name "+$agent.name);
+#ENDRULE
+
+#RULE equals return
+#CLASS demo.example.StringUniquer$Agent
+#METHOD equals
+#AT EXIT
+#IF true
+#DO
+#traceln("equals return: "+$!);
+#ENDRULE
+
+#RULE hash return
+#CLASS demo.example.StringUniquer$Agent
+#METHOD hashCode
+#AT EXIT
+#IF true
+#DO
+#traceln("hash return: "+$!);
+#ENDRULE
