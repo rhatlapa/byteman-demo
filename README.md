@@ -16,11 +16,6 @@ these examples are inspired by presentation shown in devconf 2019 (https://devco
    * bmsubmit -u file
    * bmsubmit can redefine rules, but be aware once you remove rule form file. So better to -u them always
    * bm check, useless without -cp :(
- * jrd + byteman
-   * no overwhelming substitution
-   * good addition
-   * great for apps without debuginfo and/or obfuscated
-     * ITW case
  * http://downloads.jboss.org/byteman/4.0.5/byteman-programmers-guide.html#location-specifiers + http://downloads.jboss.org/byteman/4.0.5/byteman-programmers-guide.html#rule-expressions
  * date
    * simple info obtaining
