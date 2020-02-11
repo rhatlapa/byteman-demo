@@ -12,7 +12,7 @@ public class DivisionRow implements Runnable {
     private static final Random r = new Random();
 
     public static void main(String[] args) {
-        new Thread(new DatePrinter()).start();
+        new Thread(new DivisionRow()).start();
     }
 
     public void run() {
@@ -31,7 +31,7 @@ public class DivisionRow implements Runnable {
                 System.out.print(randomDivisibles.size() + ": ");
                 randomDivisibles.forEach(t -> System.out.print(t.getKey() + "; "));
                 System.out.println();
-                Thread.sleep(1000);
+                Thread.sleep(2000);
             } catch (Exception ex) {
                 ex.printStackTrace();
             } catch (Error e) {
@@ -42,17 +42,17 @@ public class DivisionRow implements Runnable {
     }
 
     private static byte[] getLoad(int v) {
-        //we need a lot of ram here; Each entry will eat a 5 kilos now
-        byte[] b = new byte[5 * 1024];
+        //we need a lot of ram here; Each entry will eat a 1 kilos now
+        byte[] b = new byte[1 * 1024];
         return b;
     }
 
-    private static void addObscureNumbers(int i, List<Result> randomDivisibles) throws InterruptedException {
+    private static void addObscureNumbers(int i, List<Result> randomDivisibles) {
         List<Result> results = obscureQueryNumbersDivisibleBy(i);
         randomDivisibles.add(results.get(r.nextInt(results.size())));
     }
 
-    private static List<Result> obscureQueryNumbersDivisibleBy(int divisibleBy) throws InterruptedException {
+    private static List<Result> obscureQueryNumbersDivisibleBy(int divisibleBy) {
         List<Result> queriedEntries = new ArrayList<>();
         for (Map.Entry<Integer, byte[]> e : query().entrySet()) {
             if (e.getKey() % divisibleBy == 0) {
