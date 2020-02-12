@@ -45,7 +45,8 @@ public class FaultInjectionTest {
 	@Test
 	@BMRule(name = "writes fail before end on IO issue",
 			targetClass = "FileOutputStream",
-			targetMethod = "write(byte[]Ø)",
+			targetMethod = "write(byte[])",
+			targetLocation = "AT ENTRY",
 			condition = "incrementCounter($0) == 2",
 			action = "throw new java.io.IOException( \"Insufficient space!\" )"
 	)
