@@ -2,9 +2,9 @@ RULE show consumed exception
 CLASS demo.example.DatePrinter
 METHOD printDate(Date)
 AT EXCEPTION EXIT
-BIND demo.example:RuntimeException = $^
+BIND ex:RuntimeException = $^
 IF TRUE
-DO demo.example.printStackTrace(System.err);
+DO ex.printStackTrace(System.err);
 ENDRULE
 
 

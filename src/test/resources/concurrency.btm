@@ -4,5 +4,5 @@ METHOD defineNewValue
 AT ENTRY
 IF TRUE
 DO
-  Thread.sleep(500)
+  delay(100)
 ENDRULE
